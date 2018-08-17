@@ -2,7 +2,7 @@ package com.cice.main;
 
 import com.cice.logica.GestionEmpresa;
 
-/*
+/**
  * EJERCICIO EXTRA 14
  * Realizar un programa que:
  * 	a) Permita generar empleados: nombre, apellido, dirección, DNI, mail
@@ -13,7 +13,13 @@ public class Main {
 
 	public static void main(String[] args) {
 		
+		//Objeto de la clase GestionEmpresa
 		GestionEmpresa servicio = new GestionEmpresa();
+		
+		System.out.println("======================================");
+		System.out.println("BIENVENIDO A LA GESTIÓN DE TU EMPRESA");
+		System.out.println("======================================");
+		
 		servicio.mostrarMenu();
 
 	}

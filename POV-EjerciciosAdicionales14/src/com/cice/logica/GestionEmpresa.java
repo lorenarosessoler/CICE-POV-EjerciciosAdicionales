@@ -1,7 +1,6 @@
 package com.cice.logica;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 import com.cice.modelo.Departamento;
@@ -20,13 +19,9 @@ public class GestionEmpresa {
 		Scanner sc = new Scanner (System.in);
 		int opcion = 0;
 		
-		System.out.println("======================================");
-		System.out.println("BIENVENIDO A LA GESTIÓN DE TU EMPRESA");
-		System.out.println("======================================");
-		
 		do {
 			
-			System.out.println("Esto es lo que podemos hacer por ti:");
+			System.out.println("¿Qué desea realizar?:");
 			System.out.println("1 - Crear un Empleado");	
 			System.out.println("2 - Crear un Departamento");
 			System.out.println("3 - Asignar un Director al Departamento");
@@ -84,7 +79,7 @@ public class GestionEmpresa {
 		Empleado empleado = new Empleado(); //Objeto Empleado - Uso el constructor sin parámetros
 		
 		do {
-			empleado = new Empleado(); // si no utilizaramos la inicialización dentro del bucle nos mostraría siempre el último emplead
+			empleado = new Empleado(); // si no utilizaramos la inicialización dentro del bucle nos mostraría siempre el último empleado
 			
 			System.out.print("Introduce el nombre: ");
 			empleado.setNombre(sc.next());
@@ -105,6 +100,8 @@ public class GestionEmpresa {
 			listaEmpleados.add(empleado);	//Añadimos el empleado introducido a la lista de empleados
 
 		} while (respuesta.equals("s"));
+		
+		mostrarMenu();
 	}
 	
 	
@@ -113,7 +110,7 @@ public class GestionEmpresa {
 	private void mostrarEmpleados() {
 		System.out.println("EMPLEADOS:");
 		for (Empleado emp : listaEmpleados) {
-			System.out.println(listaEmpleados.indexOf(emp)+ " . " +emp.toString()); //Muestra el nombre y el apellido de cada empleado
+			System.out.println(listaEmpleados.indexOf(emp) + " . " +emp.toString()); //Muestra el nombre y el apellido de cada empleado
 		}
 		System.out.println("-----------------------");
 	}
@@ -143,6 +140,8 @@ public class GestionEmpresa {
 			listaDepartamentos.add(departamento);//Añadimos el departamento introducido a la lista de empleados
 			
 		} while(respuesta.equals("s"));
+		
+		mostrarMenu();
 	}
 	
 	
@@ -151,53 +150,21 @@ public class GestionEmpresa {
 		private void mostrarDepartamentos() {
 			System.out.println("DEPARTAMENTOS");
 			for (Departamento dep : listaDepartamentos) {
-				System.out.println(listaDepartamentos.indexOf(dep)+ " . " +dep.getNombre());
+				//Creamos un índice para que enumere los departamentos
+				System.out.println(listaDepartamentos.indexOf(dep)+ " .- " +dep.getNombre());
 			}
 			System.out.println("-----------------------");
 		}
 
-		
-		
-	//Método Asignar Director a un Departamento
-	private void asignarDirectorDepartamento() {
-		Scanner sc = new Scanner (System.in);
-		//String respuesta = " ";
-		//Empleado director = new Empleado(); //Objeto Empleado - Uso el constructor sin parámetros
-		
-		//do {
-		//	director = new Empleado();
-			
-			//Mostrar la lista de departamentos y seleccionar el departamento al que quiero asignar un director
-			int departamentoSeleccionado = 0;
-			System.out.println("Departamentos disponibles: ");
-			mostrarDepartamentos();
-			System.out.print("Selecciona el departamento al que quieres asignar un director: ");
-			departamentoSeleccionado = sc.nextInt();
-			
-			//Mostrar la lista de empleados y seleccionar el empleado selecionado para director
-			int empleadoSeleccionado = 0;
-			System.out.println("Empleados disponibles: ");
-			mostrarEmpleados();
-			System.out.print("Selecciona el empleado al que quieres asignar como director: ");
-			empleadoSeleccionado = sc.nextInt();
-			
-			//Asigno al departamento seleccionado el empleado elegido como director
-			Departamento departamentoElegido = listaDepartamentos.get(departamentoSeleccionado);
-			Empleado empleadoElegido = listaEmpleados.get(empleadoSeleccionado);
-			departamentoElegido.setDirector(empleadoElegido);
-			System.out.println("El Director del departamento " +departamentoElegido.getNombre()+ " es " +departamentoElegido.getDirector());
-			System.out.println("-----------------------");
+	
 
-		//} while (respuesta.equals("s"));
-			
-	}
-	
-	
-	
+		
 	//Método Asignar Empleado a un Departamento
 	private void asignarEmpleadoDepartamento() {
 		Scanner sc = new Scanner (System.in);
 		
+		//Departamentos disponibles
+
 		//Mostrar la lista de departamentos y seleccionar el departamento al que quiero asignar un empleado
 		int departamentoSeleccionado = 0;
 		System.out.println("Departamentos disponibles: ");
@@ -206,15 +173,19 @@ public class GestionEmpresa {
 		departamentoSeleccionado = Integer.parseInt(sc.nextLine());
 		
 		//Mostrar la lista de empleados y seleccionar el empleado/s elegido/s para añadir al departamento
+		//Otra manera de hacerlo
 		int [] empleadosSeleccionados;
 		System.out.println("Empleados disponibles: ");
 		mostrarEmpleados();
 		//Cogemos los empleados introducidos y los separamos cogiendo los ids de los empleados
 		System.out.print("Selecciona uno o varios empleados (Separados por una coma, ejemplo: 1,2) para añadir al departamento");
+		//Esto nos devuelve un array de Strings
 		String[] aux = sc.nextLine().split(",");
+		//Construyo un nuevo array que inicializo al tamaño del primer string
 		empleadosSeleccionados = new int [aux.length];
 		//Bucle donde cojo los ids de los empleados introducidos
 		for (int i = 0; i < aux.length; i++) {
+			//Cojo un String y lo meto en un entero
 			empleadosSeleccionados[i]=Integer.parseInt(aux[i]);
 		}
 		
@@ -229,6 +200,7 @@ public class GestionEmpresa {
 			//VERSION PRO
 			listaDepartamentos.get(departamentoSeleccionado).getListaEmpleados().add(empleadoElegido);
 		}
+		
 		System.out.println("Estos son los empleados que han añadido al departamento de " +listaDepartamentos.get(departamentoSeleccionado).getNombre() );
 		for (Empleado emp : listaDepartamentos.get(departamentoSeleccionado).getListaEmpleados()) {
 			System.out.println(emp.toString());
@@ -242,5 +214,42 @@ public class GestionEmpresa {
 		//Lambda
 		//listaDepartamentos.stream().allMatch(k -> k.getNombre().equals("Gustavo"));
 	}	
+	
+	
+	
+	//Método Asignar Director a un Departamento
+	private void asignarDirectorDepartamento() {
+		Scanner sc = new Scanner (System.in);
+				
+		//Departamentos disponibles
+		//Mostrar la lista de departamentos y seleccionar el departamento al que quiero asignar un director
+		int departamentoSeleccionado = 0;
+		System.out.println("Departamentos disponibles: ");
+		mostrarDepartamentos();
+		System.out.print("Selecciona un departamento al que quiera asignar un director: ");
+		departamentoSeleccionado = sc.nextInt();
+				
+		//Empleados disponibles
+		//Mostrar la lista de empleados y seleccionar el empleado selecionado para director
+		int empleadoSeleccionado = 0;
+		System.out.println("Empleados disponibles: ");
+		mostrarEmpleados();
+		System.out.print("Selecciona un empleado al que quiera asignar como director: ");
+		empleadoSeleccionado = sc.nextInt();
+				
+		//Asigno al departamento seleccionado el empleado elegido como director
+		//En la lista de departamentos selecciono el departamento seleccionado
+		Departamento departamentoElegido = listaDepartamentos.get(departamentoSeleccionado);
+		//En la lista de empleados selecciono el empleado seleccionado
+		Empleado empleadoElegido = listaEmpleados.get(empleadoSeleccionado);
+		//Asigno al departarmento elegido el empleado elegido como director
+		departamentoElegido.setDirector(empleadoElegido);
+		System.out.println("El Director del departamento " +departamentoElegido.getNombre()+ " es " +departamentoElegido.getDirector());
+		System.out.println("-----------------------");
+
+	//} while (respuesta.equals("s"));
+			
+	//sc.close(); Se vuelve un poco loco al abrir y cerrar todo el tiempo
+	}
 
 }
