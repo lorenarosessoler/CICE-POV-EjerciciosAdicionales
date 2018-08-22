@@ -3,7 +3,8 @@ package com.cice.main;
 import com.cice.logica.GestionEmpresa;
 
 /**
- * EJERCICIO EXTRA 14
+ * Ejercicio Adicional A14: GESTIÓN EMPRESA
+ * 
  * Realizar un programa que:
  * 	a) Permita generar empleados: nombre, apellido, dirección, DNI, mail
  * 	b) Permita generar Departamentos: nombre, ubicación, teléfono
